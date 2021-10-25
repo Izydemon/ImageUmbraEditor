@@ -33,6 +33,7 @@ public class main extends javax.swing.JFrame {
 
         ImagePane = new javax.swing.JPanel();
         initLabel = new javax.swing.JLabel();
+        imagePanel = new ui.ImagePanel();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         OpenFile = new javax.swing.JMenuItem();
@@ -44,15 +45,33 @@ public class main extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         Help = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         initLabel.setText("No tiene Imagen seleccionada");
+
+        imagePanel.setOpaque(false);
+
+        javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
+        imagePanel.setLayout(imagePanelLayout);
+        imagePanelLayout.setHorizontalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 718, Short.MAX_VALUE)
+        );
+        imagePanelLayout.setVerticalGroup(
+            imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 460, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout ImagePaneLayout = new javax.swing.GroupLayout(ImagePane);
         ImagePane.setLayout(ImagePaneLayout);
         ImagePaneLayout.setHorizontalGroup(
             ImagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 718, Short.MAX_VALUE)
+            .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(ImagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ImagePaneLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -61,7 +80,7 @@ public class main extends javax.swing.JFrame {
         );
         ImagePaneLayout.setVerticalGroup(
             ImagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(ImagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ImagePaneLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -158,7 +177,7 @@ public class main extends javax.swing.JFrame {
         int res = fc.showOpenDialog(null);
         if(res == JFileChooser.APPROVE_OPTION){
             File fichero = fc.getSelectedFile();
-            System.out.println(fichero.getAbsolutePath());
+            imagePanel.AddImage(fichero);
         }
     }//GEN-LAST:event_OpenFileActionPerformed
 
@@ -171,7 +190,11 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveFileActionPerformed
 
     private void CloseAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseAppActionPerformed
-        // TODO add your handling code here:
+        int res = JOptionPane.showConfirmDialog(rootPane, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
+        
+        if(res == JOptionPane.YES_OPTION){
+            this.dispose();
+        }
     }//GEN-LAST:event_CloseAppActionPerformed
 
     private void UmbraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UmbraActionPerformed
@@ -181,6 +204,14 @@ public class main extends javax.swing.JFrame {
     private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
         JOptionPane.showMessageDialog(rootPane, "No se que poner aqui, así que hola :)", "Ayuda", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_HelpActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int res = JOptionPane.showConfirmDialog(rootPane, "¿Seguro que quieres salir?", "Salir", JOptionPane.YES_NO_OPTION);
+        
+        if(res == JOptionPane.YES_OPTION){
+            this.dispose();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -226,6 +257,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem SaveFile;
     private javax.swing.JPopupMenu.Separator Separator;
     private javax.swing.JMenuItem Umbra;
+    private ui.ImagePanel imagePanel;
     private javax.swing.JLabel initLabel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
