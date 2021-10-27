@@ -12,6 +12,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import nu.pattern.OpenCV;
 import org.opencv.core.Core;
 
+
 /**
  *
  * @author izyde
@@ -22,6 +23,9 @@ public class main extends javax.swing.JFrame {
     FileNameExtensionFilter filter = null;
     public main() {
         initComponents();
+        nu.pattern.OpenCV.loadShared();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
     }
 
     /**
@@ -44,6 +48,8 @@ public class main extends javax.swing.JFrame {
         CloseApp = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         Umbra = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         Help = new javax.swing.JMenuItem();
 
@@ -134,6 +140,16 @@ public class main extends javax.swing.JFrame {
             }
         });
         jMenu2.add(Umbra);
+        jMenu2.add(jSeparator1);
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem1.setText("Deshacer");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
 
         MenuBar.add(jMenu2);
 
@@ -208,7 +224,7 @@ public class main extends javax.swing.JFrame {
                 imagePanel.Umbrar(um);
             }
             catch(NumberFormatException e){
-                JOptionPane.showMessageDialog(rootPane, "Introduce un valor entero", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(rootPane, "Introduzca un valor entero", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_UmbraActionPerformed
@@ -224,6 +240,10 @@ public class main extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        imagePanel.undo();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,5 +294,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

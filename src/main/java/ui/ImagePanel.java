@@ -31,7 +31,6 @@ public class ImagePanel extends JPanel {
     }
     
     public void AddImage(File img){
-        System.out.println(img.getAbsolutePath());
         image = Imgcodecs.imread(img.getAbsolutePath());
         imageUmbra = image;
         this.setOpaque(true);
@@ -40,7 +39,12 @@ public class ImagePanel extends JPanel {
     }
     
     public void SaveImage(File img){
-        Imgcodecs.imwrite(img.getAbsolutePath(), image);
+        Imgcodecs.imwrite(img.getAbsolutePath(), imageUmbra);
+    }
+    
+    public void undo(){
+        imageUmbra = imageUmbraPrev;
+        this.update(this.getGraphics());
     }
     
     @Override
@@ -57,6 +61,7 @@ public class ImagePanel extends JPanel {
     public void Umbrar(Integer umbral){
         imageUmbraPrev = imageUmbra;
         imageUmbra = umbralizar(image, umbral);
+        this.update(this.getGraphics());
     }
     
     private Mat umbralizar(Mat imagen_original, Integer umbral) {
