@@ -9,6 +9,8 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import nu.pattern.OpenCV;
+import org.opencv.core.Core;
 
 /**
  *
@@ -185,7 +187,7 @@ public class main extends javax.swing.JFrame {
         int res = fc.showSaveDialog(null);
         if(res == JFileChooser.APPROVE_OPTION){
             File fichero = fc.getSelectedFile();
-            System.out.println(fichero.getAbsolutePath());
+            imagePanel.SaveImage(fichero);
         }
     }//GEN-LAST:event_SaveFileActionPerformed
 
@@ -198,7 +200,17 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseAppActionPerformed
 
     private void UmbraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UmbraActionPerformed
-        JOptionPane.showMessageDialog(rootPane, "Umbralizado finalizado", "Umbralizado", JOptionPane.INFORMATION_MESSAGE);
+        String res = JOptionPane.showInputDialog(rootPane, "Introduzca un valor de umbralizado", "Umbralizado", JOptionPane.QUESTION_MESSAGE);
+        
+        if(res != null){
+            try {
+                int um = Integer.parseInt(res);
+                imagePanel.Umbrar(um);
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(rootPane, "Introduce un valor entero", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_UmbraActionPerformed
 
     private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed

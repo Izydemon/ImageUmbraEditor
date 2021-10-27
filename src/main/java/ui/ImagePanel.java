@@ -7,6 +7,11 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.highgui.HighGui;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 /**
  *
@@ -14,7 +19,10 @@ import javax.swing.JPanel;
  */
 public class ImagePanel extends JPanel {
     
-    private BufferedImage image;
+    private Image copyImg;
+    private Mat image;
+    private Mat imageUmbra;
+    private Mat imageUmbraPrev;
     
     boolean imageSet = false;
     
@@ -23,14 +31,16 @@ public class ImagePanel extends JPanel {
     }
     
     public void AddImage(File img){
-        try {
-            image = ImageIO.read(img);
-            this.setOpaque(true);
-            imageSet = true;
-            this.update(this.getGraphics());
-        } catch (IOException ex) {
-            System.out.println("Couldn't load image");
-        }
+        System.out.println(img.getAbsolutePath());
+        image = Imgcodecs.imread(img.getAbsolutePath());
+        imageUmbra = image;
+        this.setOpaque(true);
+        imageSet = true;
+        this.update(this.getGraphics());
+    }
+    
+    public void SaveImage(File img){
+        Imgcodecs.imwrite(img.getAbsolutePath(), image);
     }
     
     @Override
@@ -38,12 +48,18 @@ public class ImagePanel extends JPanel {
         super.paintComponent(g);
         
         if(imageSet){
-            Image img = image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+            copyImg = HighGui.toBufferedImage(imageUmbra);
+            Image img = copyImg.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
             g.drawImage(img, 0, 0, this);
         }
     }
     
-    /*private Mat umbralizar(Mat imagen_original, Integer umbral) {
+    public void Umbrar(Integer umbral){
+        imageUmbraPrev = imageUmbra;
+        imageUmbra = umbralizar(image, umbral);
+    }
+    
+    private Mat umbralizar(Mat imagen_original, Integer umbral) {
         // crear dos imágenes en niveles de gris con el mismo
         // tamaño que la original
         Mat imagenGris = new Mat(imagen_original.rows(), imagen_original.cols(), CvType.CV_8U);
@@ -56,5 +72,5 @@ public class ImagePanel extends JPanel {
         Imgproc.threshold(imagenGris, imagenUmbralizada, umbral, 255, Imgproc.THRESH_BINARY);
         // se devuelve la imagen umbralizada
         return imagenUmbralizada;
-    }*/
+    }
 }
