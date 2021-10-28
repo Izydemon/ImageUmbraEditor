@@ -5,11 +5,11 @@
  */
 package ui;
 
+import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import nu.pattern.OpenCV;
 import org.opencv.core.Core;
 
 
@@ -20,11 +20,14 @@ import org.opencv.core.Core;
 public class main extends javax.swing.JFrame {
 
     JFileChooser fc = new JFileChooser();
+    
     FileNameExtensionFilter filter = null;
     public main() {
         initComponents();
         nu.pattern.OpenCV.loadShared();
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        //Dimension 1024x768
+        fc.setPreferredSize(new Dimension(1024,768));
 
     }
 
@@ -230,7 +233,14 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_UmbraActionPerformed
 
     private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
-        JOptionPane.showMessageDialog(rootPane, "No se que poner aqui, así que hola :)", "Ayuda", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane, "En el menú Archivo dispondrá de 3 opciones: Abrir, Guardar y Cerrar.\n"
+                + "Abrir permite abrir una imagen para su edición en la aplicación.\n"
+                + "Guardar permite guardar el progreso de la imagen editada. Debe proporcionar una extensión para su correcto funcionamiento.\n"
+                + "Cerrar, cerrará la aplicación.\n\n"
+                + "En el menú Edición dispondrá de 2 opciones: Umbralizado y Deshacer.\n"
+                + "Umbraliado le permitirá añadir un valor de umbralizado a la imagen abierta.\n"
+                + "Deshacer permitirá volver a una modificación anterior a la ultima realizada.\n\n"
+                + "Desarrollado por: Noah Hernández Morales e Isidro Bermúdez Fernández", "Ayuda", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_HelpActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
